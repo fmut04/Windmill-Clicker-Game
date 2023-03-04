@@ -4,8 +4,7 @@
   "description": "",
   "main": "server.js",
   "scripts": {
-    "start": "node server.js",
-    "build": "babel src -d dist",
+    "start": "node --trace-warnings server.js",
     "dev": "cd ../ && npm run start"
   },
   "author": "",
