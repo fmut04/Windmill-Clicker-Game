@@ -7,19 +7,17 @@ require('dotenv').config()
 app.use(express.json());
 app.use(cors());
 
-app.listen(process.env.PORT || 3001, function () {
-  console.log("server is running at", process.env.PORT || 3001 );
-});
+
 
 const dbName = 'authentication';
 const { MongoClient, ServerApiVersion } = require('mongodb');
 const uri = `mongodb+srv://${process.env.DB_USERNAME}:${process.env.DB_PASSWORD}@${process.env.DB_SRC}/?retryWrites=true&w=majority`;
-//console.log(uri)
 const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true, serverApi: ServerApiVersion.v1 });
-console.log(client)
    client.connect().then(() => {
 
-    
+    app.listen(process.env.PORT || 3001, function () {
+      console.log("server is running at", process.env.PORT || 3001 );
+    });
 
        console.log('Connected to MongoDB');
        const db = client.db(dbName);
