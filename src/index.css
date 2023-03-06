@@ -81,6 +81,7 @@ html {
 }
 .large-icons {
   width: 5vw;
+  max-width: 50px;
   margin: 0px 1rem;
 }
 #center-div {
@@ -89,6 +90,13 @@ html {
 #right-div {
   width: 30vw;
   background-color: rgba(0, 0, 0, 0.5);
+}
+
+.display-bar {
+  padding: .2rem 1rem;
+  background-color: rgba(255, 255, 255, 0.4);
+  border-radius: 2rem;
+  margin-bottom: 1rem;
 }
 
 #left-div {
@@ -105,7 +113,7 @@ h1 {
 .no-margin {
   margin: 0px !important;
 }
-.green {
+.beige {
   color: #f8ffd1
 }
 
@@ -287,10 +295,17 @@ line-height: 0;
   align-items: center;
 }
 
-.small-margin {
-  margin: 1rem;
+.small-margin-top {
+  margin-top: 1rem;
 }
 
+.small-hor-margin {
+  margin: 0rem 1rem;
+}
+
+.small-ver-margin {
+  margin: .1rem 0rem;
+}
 
 .wind-mill, .wind-mill-fan {
   cursor: url(/public/icons/wind-cursor.png), auto;

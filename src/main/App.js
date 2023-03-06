@@ -1,7 +1,7 @@
 import * as React from "react";
-import Shop from "./shop/Shop.js"
+import Shop from "../shop/Shop.js"
 import GameContainer from "./GameContainer.js";
-import Authentication from "./Authentication.js";
+import Authentication from "../auth/Authentication.js";
 class App extends React.Component {
     state = {
       // the user's total electricity, the currency in this game
@@ -11,10 +11,10 @@ class App extends React.Component {
       // click power determnines how fast each click spins the windmill
       clickPower: 1,
       // Stores the data for the items and the upgrades purchasable
-      shopData: {"Fan": {cost: 5, eps: 1, numActive: 0, description: "It's like a mini windmill"}, "Leaf Blower": {cost: 50 , eps: 5, numActive: 0, description: "Loud and powerful"},
-       "Rocket": { cost: 2000 ,eps: 200, numActive: 0, description: "This might be overkill" },
+      shopData: {"Fan": {cost: 5, eps: .1, numActive: 0, description: "It's like a mini windmill"}, "Leaf Blower": {cost: 100 , eps: 1, numActive: 0, description: "Loud and powerful"},
+       "Rocket": { cost: 2000 ,eps: 20, numActive: 0, description: "This might be overkill" },
       "clickPower": {cost: 10, numActive: 0}, "wps":  {cost: 20, numActive: 0}},
-      // if user is not logged in an authentication component will be visible
+      // if user is not logged in, an authentication component will be visible
       isLoggedIn: false,
     };
 
@@ -68,18 +68,21 @@ class App extends React.Component {
     });
   }
 
-  updateWatts(wattsToUpdate) {
-    //console.log(typeof wattsToUpdate)
+  // watts can be positive or negative
+  updateWatts(watts) {
     this.setState({
-      totalWatts: +(this.state.totalWatts + wattsToUpdate).toFixed(2)
+      totalWatts: +(this.state.totalWatts + watts).toFixed(2)
     })
   }
+
+
 
   multClickPower(multFactor) {
     this.setState({
       clickPower: this.state.clickPower * multFactor
     })
   }
+
   getTotalWatts() {
     return this.state.totalWatts
   }
@@ -97,7 +100,6 @@ class App extends React.Component {
   }
  
   getGameInfo() {
-    console.log("getting info", this.state.totalWatts)
     return {
       totalWatts: this.state.totalWatts,
       eps: this.state.eps,
@@ -107,7 +109,6 @@ class App extends React.Component {
   }
 
   setGameInfo({totalWatts,eps,clickPower,shopData}) {
-    console.log(totalWatts,eps,clickPower,shopData)
     this.setState({
       totalWatts: totalWatts,
       eps: eps,

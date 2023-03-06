@@ -15,6 +15,7 @@ class Authentication extends React.Component {
       usernameLogin: "",
       passwordLogin: "",
       isLoggedIn: false,
+      prevWatts: 0
     }
   }
 
@@ -23,27 +24,38 @@ class Authentication extends React.Component {
   }
    
    register = () => {
-    Axios.post("http://localhost:3001/create-user", {
+    Axios.post("https://windmill-spinner-backend.onrender.com/create-user", {
       username: this.state.usernameReg,
       password: this.state.passwordReg,
       gameInfo: this.getGameInfo(),
     }).then(() => {
+      console.log("registered")
+      this.setState({
+        isLoggedIn: true
+      })
       this.setLoggedIn()
+    }).catch(() => {
+      console.log("Username taken, please try again.")
     });
 
   };
 
    saveInfo = () => {
     if(!this.state.isLoggedIn) return 
-    Axios.post("http://localhost:3001/save-data", {
+    const currGameInfo = this.getGameInfo()
+    if(currGameInfo.totalWatts===this.state.prevWatts) return
+    Axios.post("https://windmill-spinner-backend.onrender.com/save-data", {
       username: this.state.usernameLogin,
       password: this.state.passwordLogin,
-      gameInfo: this.getGameInfo(),
-    }).then(() => console.log("Auto Save", this.getGameInfo()));
+      gameInfo: currGameInfo,
+    }).then(() => {
+      console.log("Auto Save")
+      this.changeState('prevWatts',currGameInfo.totalWatts)
+    });
   }
 
    login = () => {
-    Axios.post("http://localhost:3001/login", {
+    Axios.post("https://windmill-spinner-backend.onrender.com/login", {
       username: this.state.usernameLogin,
       password: this.state.passwordLogin,
     }).then((response) => {
@@ -51,8 +63,11 @@ class Authentication extends React.Component {
         isLoggedIn: true
       })
       this.setLoggedIn()
-      this.setGameInfo(response.data)}
-  )};
+      this.setGameInfo(response.data)
+    }).catch(() => {
+      console.log("Incorrect Username or Password")
+    })
+  };
 
       componentDidMount() {
           this.interval = setInterval(this.saveInfo, 10000);
@@ -67,11 +82,10 @@ class Authentication extends React.Component {
     { 
     !this.state.isLoggedIn ? 
     <AuthRenderer
-    changeState = {(key,val) => this.state.changeState(key,val)}
+    changeState = {(key,val) => this.changeState(key,val)}
     register= {this.register}
     login={this.login}
     />
-   
     : null
     }
     </>

@@ -1,5 +1,5 @@
 import React from "react";
-import ElectricityText from "../ElectricityText";
+import ElectricityText from "../main/ElectricityText";
 
 function Helper({title,upgradesClick,eps,description, cost}) {
 
@@ -10,7 +10,7 @@ function Helper({title,upgradesClick,eps,description, cost}) {
           <h2 className="block upgrade-title">{title}</h2>
           <div className="desc-txt">
           <ElectricityText
-          text = {eps/10}
+          text = {eps}
           styles = {{div: "no-margin med-spacing", text: "right-aligned desc-txt small-pad-left", icon: "small-electricity"}}
           endText = {"/s"}
           />

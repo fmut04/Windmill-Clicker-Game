@@ -1,5 +1,5 @@
 import React from "react";
-import ElectricityText from "../ElectricityText";
+import ElectricityText from "../main/ElectricityText";
 
 class Upgrade extends React.Component {
   constructor(props) {

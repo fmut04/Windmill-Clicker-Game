@@ -4,13 +4,13 @@ export default function HelperDisplayBar({shopData}) {
 
     function renderHelperIcon(key,helpersActive) {
         return (
-            <div className='small-margin center-items' key={key}>
+            <div className='small-hor-margin center-items' key={key}>
                 <img 
                 src={ `/icons/${key}.png`} 
                 alt={key}
                 className={"large-icons"}
                 />    
-                 <h2 className='small-txt green'>{helpersActive}</h2>
+                 <h2 className='small-txt beige small-ver-margin'>{helpersActive}</h2>
             </div>
         )
     }
@@ -24,7 +24,7 @@ export default function HelperDisplayBar({shopData}) {
         return helperDisplay
       }
   return (
-    <div className='flex-jstfy-cent '>
+    <div className='flex-jstfy-cent display-bar'>
     {createHelperDisplayBar(shopData)}
     </div>
   )

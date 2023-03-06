@@ -4,7 +4,7 @@
   "description": "",
   "main": "server.js",
   "scripts": {
-    "start": "node --trace-warnings server.js",
+    "start": "node server.js",
     "dev": "cd ../ && npm run start"
   },
   "author": "",

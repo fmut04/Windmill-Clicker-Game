@@ -10,14 +10,14 @@ function UpgradeShop({multEps, getTotalWatts, updateTotalWatts, multClickPower, 
     <Upgrade
       title="Click Power"
       upgradeMult={2}
-      description = "double your click power" 
+      description = "Clicks spin the windmill twice as fast" 
       cost={shopData["clickPower"].cost}
       upgradeClick={(cost,upgradeMult,title) => handleUpgradeClick(cost,upgradeMult,title)}
     />
 
     <Upgrade
       title="Item Strength"
-      description = "double item strength" 
+      description = "Items spin the windmill twice as fast" 
       upgradeMult={2}
       cost={shopData["wps"].cost}
       upgradeClick={(cost,upgradeMult,title) => handleUpgradeClick(cost,upgradeMult,title)}
