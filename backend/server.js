@@ -7,13 +7,10 @@ require('dotenv').config()
 app.use(express.json());
 app.use(cors());
 
-
-
 const dbName = 'authentication';
 const { MongoClient, ServerApiVersion } = require('mongodb');
 const uri = `mongodb+srv://${process.env.DB_USERNAME}:${process.env.DB_PASSWORD}@${process.env.DB_SRC}/?retryWrites=true&w=majority`;
 const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true, serverApi: ServerApiVersion.v1 });
-console.log(client)
   try {
     client.connect().then(() => {
 
@@ -29,6 +26,11 @@ console.log(client)
           console.log("create user")
           const userData = req.body;
           userData.password = await bcrypt.hash(userData.password, 10)
+          const existUsername = await usersCollection.findOne({ username: userData.username});
+          if (existUsername) {
+            console.log('username taken');
+            res.sendStatus(409)
+          }
               usersCollection.insertOne(userData).then((result) => {
                   if (!result.insertedId) {
                     console.log("User Creation Error");
@@ -75,10 +77,6 @@ console.log(client)
   } catch (error) {
     console.log(error)
   }
-
-//  app.listen(process.env.PORT || 3000, function () {
-//   console.log("server is running");
-// });
 
   const path = require("path")
   app.use(express.static(path.join(__dirname, '../build')))
