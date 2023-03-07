@@ -27,9 +27,10 @@ const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology:
           const userData = req.body;
           userData.password = await bcrypt.hash(userData.password, 10)
           const existUsername = await usersCollection.findOne({ username: userData.username});
+          console.log("test", existUsername)
           if (existUsername) {
             console.log('username taken');
-            res.sendStatus(409)
+            return res.sendStatus(409)
           }
               usersCollection.insertOne(userData).then((result) => {
                   if (!result.insertedId) {

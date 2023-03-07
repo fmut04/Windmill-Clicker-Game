@@ -6,6 +6,8 @@ class Authentication extends React.Component {
 
   constructor({ getGameInfo, setGameInfo, setLoggedIn }) {
     super()
+    // this.backendUrl = "https://windmill-spinner-backend.onrender.com"
+    this.backendUrl = "http://localhost:3001"
     this.getGameInfo = getGameInfo
     this.setGameInfo = setGameInfo
     this.setLoggedIn = setLoggedIn
@@ -15,7 +17,8 @@ class Authentication extends React.Component {
       usernameLogin: "",
       passwordLogin: "",
       isLoggedIn: false,
-      prevWatts: 0
+      prevWatts: 0,
+      errorCode: undefined
     }
   }
 
@@ -24,7 +27,7 @@ class Authentication extends React.Component {
   }
    
    register = () => {
-    Axios.post("https://windmill-spinner-backend.onrender.com/create-user", {
+    Axios.post(`${this.backendUrl}/create-user`, {
       username: this.state.usernameReg,
       password: this.state.passwordReg,
       gameInfo: this.getGameInfo(),
@@ -34,8 +37,10 @@ class Authentication extends React.Component {
         isLoggedIn: true
       })
       this.setLoggedIn()
-    }).catch(() => {
-      console.log("Username taken, please try again.")
+    }).catch((error) => {
+      this.setState({
+        errorCode: error.response.status
+      })
     });
 
   };
@@ -44,7 +49,7 @@ class Authentication extends React.Component {
     if(!this.state.isLoggedIn) return 
     const currGameInfo = this.getGameInfo()
     if(currGameInfo.totalWatts===this.state.prevWatts) return
-    Axios.post("https://windmill-spinner-backend.onrender.com/save-data", {
+    Axios.post(`${this.backendUrl}/save-data`, {
       username: this.state.usernameLogin,
       password: this.state.passwordLogin,
       gameInfo: currGameInfo,
@@ -55,7 +60,7 @@ class Authentication extends React.Component {
   }
 
    login = () => {
-    Axios.post("https://windmill-spinner-backend.onrender.com/login", {
+    Axios.post(`${this.backendUrl}/login`, {
       username: this.state.usernameLogin,
       password: this.state.passwordLogin,
     }).then((response) => {
@@ -64,8 +69,10 @@ class Authentication extends React.Component {
       })
       this.setLoggedIn()
       this.setGameInfo(response.data)
-    }).catch(() => {
-      console.log("Incorrect Username or Password")
+    }).catch((error) => {
+      this.setState({
+        errorCode: error.response.status
+      })
     })
   };
 
@@ -85,6 +92,7 @@ class Authentication extends React.Component {
     changeState = {(key,val) => this.changeState(key,val)}
     register= {this.register}
     login={this.login}
+    errorCode={this.state.errorCode}
     />
     : null
     }

@@ -94,7 +94,7 @@ html {
 
 .display-bar {
   padding: .2rem 1rem;
-  background-color: rgba(255, 255, 255, 0.4);
+  background-color: rgba(150, 223, 147, 0.51);
   border-radius: 2rem;
   margin-bottom: 1rem;
 }
@@ -314,24 +314,6 @@ line-height: 0;
   grid-row: 1;
 } 
 
-@keyframes rotation {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
-
-.linear {
-  animation-timing-function: linear;
-  animation-iteration-count: infinite;
-}
-
-/* .fan-rotate {
-  animation: rotation 3s linear infinite;
-} */
-
 .wind-mill-fan {
   margin-top: -3vh;
 }
@@ -396,4 +378,11 @@ line-height: 0;
 
 .med-spacing {
   letter-spacing: 1px;
+}
+
+.error-txt {
+  color: red;
+  text-align: center;
+  font-size: 1.2vw;
+  margin: .5rem;
 }
