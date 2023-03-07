@@ -6,8 +6,7 @@ class Authentication extends React.Component {
 
   constructor({ getGameInfo, setGameInfo, setLoggedIn }) {
     super()
-    // this.backendUrl = "https://windmill-spinner-backend.onrender.com"
-    this.backendUrl = "http://localhost:3001"
+    this.backendUrl = "https://windmill-spinner-backend.onrender.com"
     this.getGameInfo = getGameInfo
     this.setGameInfo = setGameInfo
     this.setLoggedIn = setLoggedIn
