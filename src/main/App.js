@@ -15,7 +15,7 @@ class App extends React.Component {
        "Rocket": { cost: 2000 ,eps: 20, numActive: 0, description: "This might be overkill" },
       "clickPower": {cost: 10, numActive: 0}, "wps":  {cost: 20, numActive: 0}},
       // if user is not logged in, an authentication component will be visible
-      isLoggedIn: false,
+      loginState: "notLoggedIn",
     };
 
   render() {
@@ -89,7 +89,7 @@ class App extends React.Component {
 
   setLoggedIn() {
     this.setState({
-      isLoggedIn: true
+      loginState: "loggedIn"
     })
   }
 

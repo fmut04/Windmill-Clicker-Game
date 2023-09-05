@@ -15,7 +15,7 @@ class Authentication extends React.Component {
       passwordReg: "",
       usernameLogin: "",
       passwordLogin: "",
-      isLoggedIn: false,
+      loginState: "notLoggedIn",
       prevWatts: 0,
       errorCode: undefined
     }
@@ -26,6 +26,9 @@ class Authentication extends React.Component {
   }
    
    register = () => {
+    this.setState({
+      loginState: "loggingIn"
+    })
     Axios.post(`${this.backendUrl}/create-user`, {
       username: this.state.usernameReg,
       password: this.state.passwordReg,
@@ -33,7 +36,7 @@ class Authentication extends React.Component {
     }).then(() => {
       console.log("registered")
       this.setState({
-        isLoggedIn: true
+        loginState: "loggedIn"
       })
       this.setLoggedIn()
     }).catch((error) => {
@@ -45,7 +48,7 @@ class Authentication extends React.Component {
   };
 
    saveInfo = () => {
-    if(!this.state.isLoggedIn) return 
+    if(!this.state.loginState == "isLoggedIn") return 
     const currGameInfo = this.getGameInfo()
     if(currGameInfo.totalWatts===this.state.prevWatts) return
     Axios.post(`${this.backendUrl}/save-data`, {
@@ -59,12 +62,15 @@ class Authentication extends React.Component {
   }
 
    login = () => {
+    this.setState({
+      loginState: "loggingIn"
+    })
     Axios.post(`${this.backendUrl}/login`, {
       username: this.state.usernameLogin,
       password: this.state.passwordLogin,
     }).then((response) => {
       this.setState({
-        isLoggedIn: true
+        loginState: "isLoggedIn"
       })
       this.setLoggedIn()
       this.setGameInfo(response.data)
@@ -86,12 +92,13 @@ class Authentication extends React.Component {
     return(
     <>
     { 
-    !this.state.isLoggedIn ? 
+    !this.state.isLoggedIn == "isLoggedIn" ? 
     <AuthRenderer
     changeState = {(key,val) => this.changeState(key,val)}
     register= {this.register}
     login={this.login}
     errorCode={this.state.errorCode}
+    loginState={this.state.loginState}
     />
     : null
     }
